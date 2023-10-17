@@ -69,20 +69,20 @@ jobs:
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
 
     - name: 加载默认编译配置
-      if: !github.event.inputs.custom_config
+      if: github.event.inputs.custom_config == false
       run: |
         cd openwrt
         cp -f defconfig/mt7981-ax3000.config .config
     
     - name: 加载自定义编译配置
-      if: github.event.inputs.custom_config
+      if: github.event.inputs.custom_config == true
       run: |
         cd openwrt
         cp -f $GITHUB_WORKSPACE/.config $GITHUB_WORKSPACE/openwrt/
 
     - name: SSH connection to Actions
       uses: P3TERX/ssh2actions@v1.0.0
-      if: github.event.inputs.ssh
+      if: github.event.inputs.ssh == true
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
