@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       ssh:
-        description: 'SSH connection to Actions'
+        description: '是否使用SSH连接到Actions'
         required: false
         type: boolean
         default: false
@@ -80,7 +80,7 @@ jobs:
         cd openwrt
         cp -f $GITHUB_WORKSPACE/.config $GITHUB_WORKSPACE/openwrt/
 
-    - name: SSH connection to Actions
+    - name: SSH 连接
       uses: P3TERX/ssh2actions@v1.0.0
       if: github.event.inputs.ssh == true
       env:
