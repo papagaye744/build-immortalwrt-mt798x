@@ -69,7 +69,7 @@ jobs:
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
 
     - name: 加载自定义编译配置
-      if: github.event.inputs.custom_config == true
+      if: github.event.inputs.custom_config
       run: |
         cd openwrt
         cp -f $GITHUB_WORKSPACE/.config $GITHUB_WORKSPACE/openwrt/
@@ -82,7 +82,7 @@ jobs:
 
     - name: SSH 连接
       uses: P3TERX/ssh2actions@v1.0.0
-      if: github.event.inputs.ssh == true
+      if: github.event.inputs.ssh
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
