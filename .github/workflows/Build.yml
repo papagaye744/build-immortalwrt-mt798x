@@ -68,6 +68,7 @@ jobs:
         rm -rf feeds/packages/net/miniupnpd
         svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
+        ./scripts/feeds install -a
 
     - name: 加载自定义编译配置
       if: github.event.inputs.custom_config == 'true'
