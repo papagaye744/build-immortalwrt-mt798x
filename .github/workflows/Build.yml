@@ -63,7 +63,7 @@ jobs:
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         rm -rf feeds/packages/lang/golang
-        svn co https://github.com/immortalwrt/packages/branches/openwrt-23.05/lang/golang feeds/packages/lang/golang
+        svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang feeds/packages/lang/golang
         rm -rf feeds/packages/net/miniupnpd
         svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
@@ -102,14 +102,16 @@ jobs:
         find dl -size -1024c -exec rm -f {} \;
 
     - name: 编译固件
+      id: compile
       run: |
         cd openwrt
-        make -j$(nproc)
+        make -j$(nproc) || make -j1 V=s
+        echo "::set-output name=status::success"
         echo "FILE_DATE=$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
 
     - name : 上传输出文件
       uses: actions/upload-artifact@master
-      if: env.UPLOAD_OUTPUT == 'true' && !cancelled()
+      if: steps.compile.outputs.status == 'success' && env.UPLOAD_OUTPUT == 'true' && !cancelled()
       with:
         name: ${{ env.DEVICE }}--${{ env.FILE_DATE }}
         path: openwrt/bin
