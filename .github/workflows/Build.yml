@@ -75,14 +75,6 @@ jobs:
         cd openwrt
         sed -i 's/192.168.1.1/192.168.68.1/g' package/base-files/files/bin/config_generate
 
-    - name: 下载依赖
-      run: |
-        cd openwrt
-        make defconfig
-        make download -j8
-        find dl -size -1024c -exec ls -l {} \;
-        find dl -size -1024c -exec rm -f {} \;
-
     - name: 加载自定义编译配置
       if: github.event.inputs.custom_config == 'true'
       run: |
@@ -101,6 +93,14 @@ jobs:
       env:
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
         TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+
+    - name: 下载依赖
+      run: |
+        cd openwrt
+        make defconfig
+        make download -j8
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
 
     - name: 编译固件
       id: compile
