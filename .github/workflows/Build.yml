@@ -69,6 +69,12 @@ jobs:
         rm -rf feeds/packages/net/miniupnpd
         svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
+        # drop mosdns and v2ray-geodata packages that come with the source
+        find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
+        find ./ | grep Makefile | grep mosdns | xargs rm -f
+        git clone https://github.com/sbwml/luci-app-mosdns -b v5 package/mosdns
+        git clone https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+        git clone https://github.com/rufengsuixing/luci-app-adguardhome package/luci-app-adguardhome
         ./scripts/feeds install -a
 
     - name: 修改默认配置
