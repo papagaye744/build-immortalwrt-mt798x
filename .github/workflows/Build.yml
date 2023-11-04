@@ -60,6 +60,7 @@ jobs:
     - name: 配置 Feeds
       run: |
         cd openwrt
+        rm -rf feeds/luci/applications/luci-app-ssr-plus
         echo "src-git helloworld https://github.com/fw876/helloworld.git;main" >> "feeds.conf.default"
         ./scripts/feeds update -a
         #./scripts/feeds install -a
