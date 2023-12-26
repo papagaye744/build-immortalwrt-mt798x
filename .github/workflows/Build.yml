@@ -4,6 +4,14 @@ on:
   repository_dispatch:
   workflow_dispatch:
     inputs:
+      device:
+        description: '选择设备'     
+        required: true
+        default: '360t7' 
+        type: choice
+        options:
+        - 360t7
+        - rax3000m_nand
       ssh:
         description: '是否使用SSH连接到Actions'
         required: false
@@ -21,11 +29,10 @@ env:
   FEEDS_CONF: feeds.conf.default
   CONFIG_FILE: .config
   TZ: Asia/Shanghai
-  DEVICE: 360t7
   UPLOAD_OUTPUT: true
 
 jobs:
-   _360t7:
+   _build-immortalwrt-mt798x:
     runs-on: ubuntu-20.04
     permissions:
       contents: write
@@ -97,7 +104,7 @@ jobs:
       if: github.event.inputs.custom_config == 'true'
       run: |
         cd openwrt
-        cp -f $GITHUB_WORKSPACE/.config $GITHUB_WORKSPACE/openwrt/
+        cp -f $GITHUB_WORKSPACE/${{ inputs.device }}.config .config
 
     - name: 加载默认编译配置
       if: github.event.inputs.custom_config == 'false'
@@ -132,5 +139,5 @@ jobs:
       uses: actions/upload-artifact@master
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_OUTPUT == 'true' && !cancelled()
       with:
-        name: ${{ env.DEVICE }}--${{ env.FILE_DATE }}
+        name: ${{ inputs.device }}--${{ env.FILE_DATE }}
         path: openwrt/bin
