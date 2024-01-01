@@ -84,7 +84,9 @@ jobs:
         svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
         # update openclash to ssrplus
-        sed -i 's/openclash.png/ssr.png/g;s/openclash/shadowsocksr/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
+        #sed -i 's/openclash.png/ssr.png/g;s/openclash/shadowsocksr/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
+        # update openclash to passwall
+        sed -i 's/openclash.png/ssr.png/g;s/openclash/passwall/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
         # drop mosdns and v2ray-geodata packages that come with the source
         find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
         find ./ | grep Makefile | grep mosdns | xargs rm -f
