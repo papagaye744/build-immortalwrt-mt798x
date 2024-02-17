@@ -84,14 +84,14 @@ jobs:
         git clone -b openwrt-23.05 --depth 1 https://github.com/openwrt/packages /tmp/openwrt-packages
         mkdir -p feeds/packages/lang/golang
         cp -R /tmp/openwrt-packages/lang/golang/* feeds/packages/lang/golang/
-        rmm -rf /tmp/openwrt-packages
+        rm -rf /tmp/openwrt-packages
 
         rm -rf feeds/packages/net/miniupnpd
         #svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
         git clone -b openwrt-18.06 --depth 1 https://github.com/immortalwrt/packages /tmp/immortalwrt-packages
         mkdir -p feeds/packages/lang/golang
         cp -R /tmp/immortalwrt-packages/net/miniupnpd/* feeds/packages/net/miniupnpd/
-        rmm -rf /tmp/immortalwrt-packages
+        rm -rf /tmp/immortalwrt-packages
 
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
         # update openclash to ssrplus
