@@ -88,6 +88,7 @@ jobs:
 
         rm -rf feeds/packages/net/miniupnpd
         #svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
+        mkdir -p feeds/packages/net/miniupnpd
         git clone -b openwrt-18.06 --depth 1 https://github.com/immortalwrt/packages /tmp/immortalwrt-packages
         cp -R /tmp/immortalwrt-packages/net/miniupnpd/* feeds/packages/net/miniupnpd/
         rm -rf /tmp/immortalwrt-packages
