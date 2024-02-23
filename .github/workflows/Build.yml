@@ -126,7 +126,7 @@ jobs:
     - name: 修改默认配置
       run: |
         cd openwrt
-        sed -i 's/192.168.1.1/{{ inputs.default_lan_ip }}/g' package/base-files/files/bin/config_generate
+        sed -i 's/192.168.1.1/${{ inputs.default_lan_ip }}/g' package/base-files/files/bin/config_generate
 
     - name: 加载自定义编译配置
       if: github.event.inputs.custom_config == 'true'
@@ -138,7 +138,7 @@ jobs:
       if: github.event.inputs.custom_config == 'false'
       run: |
         cd openwrt
-        cp -f defconfig/{{ inputs.default_config }} .config
+        cp -f defconfig/${{ inputs.default_config }} .config
 
     - name: SSH 连接
       uses: P3TERX/ssh2actions@v1.0.0
