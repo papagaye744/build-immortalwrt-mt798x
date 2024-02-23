@@ -19,19 +19,21 @@ on:
         required: false
         type: boolean
         default: false
-      op_config:
-        description: '编译配置文件'     
+      default_config:
+        description: '默认配置文件'     
         required: false
-        default: '360t7.config' 
+        default: 'mt7981-ax3000.config' 
         type: choice
         options:
-        - 360t7.config
-        - rax3000m_nand.config
-        - netcore_n60.config
         - mt7981-ax3000.config
         - mt7986-ax6000.config
         - mt7986-ax6000-256m.config
         - mt7986-ax4200.config
+      custom_config:
+        description: '是否使用自定义编译配置'
+        required: false
+        type: boolean
+        default: true
       default_lan_ip:
         description: '默认ip'
         default: 192.168.68.1
@@ -127,10 +129,17 @@ jobs:
         cd openwrt
         sed -i 's/192.168.1.1/${{ inputs.default_lan_ip }}/g' package/base-files/files/bin/config_generate
 
-    - name: 加载编译配置
+    - name: 加载自定义编译配置
+      if: github.event.inputs.custom_config == 'true'
       run: |
         cd openwrt
-        cp -f $GITHUB_WORKSPACE/${{ inputs.op_config }} .config
+        cp -f $GITHUB_WORKSPACE/${{ inputs.device }}.config .config
+        
+    - name: 加载默认编译配置
+      if: github.event.inputs.custom_config == 'false'
+      run: |
+        cd openwrt
+        cp -f defconfig/${{ inputs.default_config }} .config
 
     - name: SSH 连接
       uses: P3TERX/ssh2actions@v1.0.0
