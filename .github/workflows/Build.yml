@@ -12,16 +12,31 @@ on:
         options:
         - 360t7
         - rax3000m_nand
+        - netcore_n60
       ssh:
         description: '是否使用SSH连接到Actions'
         required: false
         type: boolean
         default: false
+      default_config:
+        description: '默认配置文件'     
+        required: false
+        default: 'mt7981-ax3000.config' 
+        type: choice
+        options:
+        - mt7981-ax3000.config
+        - mt7986-ax6000.config
+        - mt7986-ax6000-256m.config
+        - mt7986-ax4200.config
       custom_config:
         description: '是否使用自定义编译配置'
         required: false
         type: boolean
         default: true
+      default_lan_ip:
+        description: '默认ip'
+        default: 192.168.68.1
+        required: false
 
 env:
   REPO_URL: https://github.com/hanwckf/immortalwrt-mt798x
@@ -111,19 +126,19 @@ jobs:
     - name: 修改默认配置
       run: |
         cd openwrt
-        sed -i 's/192.168.1.1/192.168.68.1/g' package/base-files/files/bin/config_generate
+        sed -i 's/192.168.1.1/{{ inputs.default_lan_ip }}/g' package/base-files/files/bin/config_generate
 
     - name: 加载自定义编译配置
       if: github.event.inputs.custom_config == 'true'
       run: |
         cd openwrt
-        cp -f $GITHUB_WORKSPACE/${{ inputs.device }}.config .config
+        cp -f $GITHUB_WORKSPACE/${{ inputs.default_config }}.config .config
 
     - name: 加载默认编译配置
       if: github.event.inputs.custom_config == 'false'
       run: |
         cd openwrt
-        cp -f defconfig/mt7981-ax3000.config .config
+        cp -f defconfig/{{ inputs.default_lan_ip }} .config
 
     - name: SSH 连接
       uses: P3TERX/ssh2actions@v1.0.0
