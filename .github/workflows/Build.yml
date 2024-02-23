@@ -1,5 +1,5 @@
 name: Build
-run-name: Build ${{ inputs.device }} with ${{ inputs.op_config }}
+run-name: Build ${{ inputs.device }}
 
 on:
   repository_dispatch:
