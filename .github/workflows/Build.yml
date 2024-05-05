@@ -83,31 +83,31 @@ jobs:
     - name: 配置 Feeds
       run: |
         cd openwrt
-        echo "src-git helloworld https://github.com/fw876/helloworld.git;main" >> "feeds.conf.default"
-        cat feeds.conf.default
-        ./scripts/feeds update -a
-        #./scripts/feeds install -a
-        # remove old package
-        rm -rf feeds/packages/net/xray-core
-        rm -rf feeds/packages/net/xray-plugin
-        rm -rf feeds/packages/net/simple-obfs
-        rm -rf feeds/luci/applications/luci-app-ssr-plus
-        # update golang version
-        rm -rf feeds/packages/lang/golang
-        #svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
-        #svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang feeds/packages/lang/golang
-        # https://github.blog/2023-01-20-sunsetting-subversion-support/
-        mkdir -p feeds/packages/lang/golang
-        git clone -b openwrt-23.05 --depth 1 https://github.com/openwrt/packages /tmp/openwrt-packages
-        cp -R /tmp/openwrt-packages/lang/golang/* feeds/packages/lang/golang/
-        rm -rf /tmp/openwrt-packages
+        #echo "src-git helloworld https://github.com/fw876/helloworld.git;main" >> "feeds.conf.default"
+        #cat feeds.conf.default
+        #./scripts/feeds update -a
+        ##./scripts/feeds install -a
+        ## remove old package
+        #rm -rf feeds/packages/net/xray-core
+        #rm -rf feeds/packages/net/xray-plugin
+        #rm -rf feeds/packages/net/simple-obfs
+        #rm -rf feeds/luci/applications/luci-app-ssr-plus
+        ## update golang version
+        #rm -rf feeds/packages/lang/golang
+        ##svn co https://github.com/openwrt/packages/branches/openwrt-22.03/lang/golang feeds/packages/lang/golang
+        ##svn co https://github.com/openwrt/packages/branches/openwrt-23.05/lang/golang feeds/packages/lang/golang
+        ## https://github.blog/2023-01-20-sunsetting-subversion-support/
+        #mkdir -p feeds/packages/lang/golang
+        #git clone -b openwrt-23.05 --depth 1 https://github.com/openwrt/packages /tmp/openwrt-packages
+        #cp -R /tmp/openwrt-packages/lang/golang/* feeds/packages/lang/golang/
+        #rm -rf /tmp/openwrt-packages
 
-        rm -rf feeds/packages/net/miniupnpd
-        #svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
-        mkdir -p feeds/packages/net/miniupnpd
-        git clone -b openwrt-18.06 --depth 1 https://github.com/immortalwrt/packages /tmp/immortalwrt-packages
-        cp -R /tmp/immortalwrt-packages/net/miniupnpd/* feeds/packages/net/miniupnpd/
-        rm -rf /tmp/immortalwrt-packages
+        #rm -rf feeds/packages/net/miniupnpd
+        ##svn co https://github.com/immortalwrt/packages/branches/openwrt-18.06/net/miniupnpd feeds/packages/net/miniupnpd
+        #mkdir -p feeds/packages/net/miniupnpd
+        #git clone -b openwrt-18.06 --depth 1 https://github.com/immortalwrt/packages /tmp/immortalwrt-packages
+        #cp -R /tmp/immortalwrt-packages/net/miniupnpd/* feeds/packages/net/miniupnpd/
+        #rm -rf /tmp/immortalwrt-packages
 
         git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
         # update openclash to ssrplus
@@ -115,12 +115,12 @@ jobs:
         # update openclash to passwall
         sed -i 's/openclash.png/ssr.png/g;s/openclash/passwall/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
         # drop mosdns and v2ray-geodata packages that come with the source
-        find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
-        find ./ | grep Makefile | grep mosdns | xargs rm -f
-        git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
-        git clone --depth 1 https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
-        git clone --depth 1 https://github.com/rufengsuixing/luci-app-adguardhome package/luci-app-adguardhome
-        git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset package/luci-app-autotimeset
+        #find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
+        #find ./ | grep Makefile | grep mosdns | xargs rm -f
+        #git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
+        #git clone --depth 1 https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+        #git clone --depth 1 https://github.com/rufengsuixing/luci-app-adguardhome package/luci-app-adguardhome
+        #git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset package/luci-app-autotimeset
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
