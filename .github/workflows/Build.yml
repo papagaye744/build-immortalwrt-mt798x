@@ -109,18 +109,18 @@ jobs:
         #cp -R /tmp/immortalwrt-packages/net/miniupnpd/* feeds/packages/net/miniupnpd/
         #rm -rf /tmp/immortalwrt-packages
 
-        git clone -b js --depth 1 https://github.com/gngpp/luci-theme-design.git  package/luci-theme-design
+        git clone -b js --depth 1 https://github.com/papagaye744/luci-theme-design.git  package/luci-theme-design
         # update openclash to ssrplus
-        #sed -i 's/openclash.png/ssr.png/g;s/openclash/shadowsocksr/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
+        sed -i 's/openclash.png/ssr.png/g;s/openclash/shadowsocksr/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
         # update openclash to passwall
-        sed -i 's/openclash.png/ssr.png/g;s/openclash/passwall/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
+        #sed -i 's/openclash.png/ssr.png/g;s/openclash/passwall/g' package/luci-theme-design/luasrc/view/themes/design/header.htm
         # drop mosdns and v2ray-geodata packages that come with the source
-        #find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
-        #find ./ | grep Makefile | grep mosdns | xargs rm -f
-        #git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
-        #git clone --depth 1 https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
-        #git clone --depth 1 https://github.com/rufengsuixing/luci-app-adguardhome package/luci-app-adguardhome
-        #git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset package/luci-app-autotimeset
+        find ./ | grep Makefile | grep v2ray-geodata | xargs rm -f
+        find ./ | grep Makefile | grep mosdns | xargs rm -f
+        git clone -b v5 --depth 1 https://github.com/sbwml/luci-app-mosdns package/mosdns
+        git clone --depth 1 https://github.com/sbwml/v2ray-geodata package/v2ray-geodata
+        git clone --depth 1 https://github.com/rufengsuixing/luci-app-adguardhome package/luci-app-adguardhome
+        git clone --depth 1 https://github.com/sirpdboy/luci-app-autotimeset package/luci-app-autotimeset
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
